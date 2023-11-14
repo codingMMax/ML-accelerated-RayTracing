@@ -12,6 +12,11 @@
 #include <memory>
 #include <random>
 
+inline double linear_to_gamma(double linear_component){
+    return sqrt(linear_component);
+}
+
+
 void write_color(std::ostream &out, color pixel_color, int samples_per_pixel);
 
 using std::shared_ptr;

@@ -4,11 +4,16 @@
 
 #include "camera.h"
 
-color camera::ray_color(const ray &r, const hittable &world) const {
+color camera::ray_color(const ray &r, int depth ,const hittable &world) const {
     hit_record rec;
-
-    if (world.hit(r, interval(0, infinity), rec)) {
-        return 0.5 * (rec.normal + color(1,1,1));
+    if(depth <= 0){
+        return color(0,0,0);
+    }
+    if (world.hit(r, interval(0.001, infinity), rec)) {
+//        vec3 direction = random_on_hemisphere(rec.normal);
+        vec3 direction = rec.normal + random_unit_vector();
+//        return 0.5 * ray_color(ray(rec.p,direction),depth - 1, world);
+        return 0.1 * ray_color(ray(rec.p, direction), depth-1, world);
     }
 
     vec3 unit_direction = unit_vector(r.direction());
@@ -72,7 +77,7 @@ void camera::render(const hittable &world) {
            color pixel_color(0,0,0);
            for(int sample = 0; sample < samples_per_pixel; sample++){
                ray r = get_ray(i ,j);
-               pixel_color += ray_color(r, world);
+               pixel_color += ray_color(r, max_depth,world);
            }
             write_color(std::cout, pixel_color, samples_per_pixel);
         }

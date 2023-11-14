@@ -3,5 +3,7 @@ cmake-build-debug/*
 build/*
 .idea/*
 *.csv
+.DS_Store
+
 
 

@@ -9,9 +9,10 @@
 #include "hittable.h"
 class camera {
 public:
-    double aspect_ratio = 1.0;
-    int     image_width = 100;
-    int     samples_per_pixel = 10;
+    double aspect_ratio         = 1.0;
+    int     image_width         = 100;
+    int     samples_per_pixel   = 10;
+    int     max_depth           = 10;
     void render(const hittable& world);
 
 private:
@@ -22,7 +23,7 @@ private:
     vec3   pixel_delta_v;  // Offset to pixel below
 
     void initialize();
-    color ray_color(const ray&r, const hittable& world) const;
+    color ray_color(const ray&r,int depth ,const hittable& world) const;
 
     ray get_ray(int i, int j) const;
 
