@@ -12,8 +12,9 @@ class sphere : public hittable{
 private:
     point3 center;
     double radius;
+    shared_ptr<material> mat;
 public:
-    sphere(point3 _center, double _radius) : center(_center), radius(_radius) {}
+    sphere(point3 _center, double _radius, shared_ptr<material>_material) : center(_center), radius(_radius), mat(_material) {}
     bool hit(const ray& r, interval ray_t, hit_record& rec) const override;
 
 };

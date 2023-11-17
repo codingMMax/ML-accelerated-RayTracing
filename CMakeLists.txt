@@ -10,6 +10,6 @@ set(SRC_FILE src/main.cpp
         src/ray.cpp
         src/hittable.cpp
         src/sphere.cpp
-        src/interval.cpp)
+        src/interval.cpp src/material.cpp src/material.h)
 include_directories(/opt/homebrew/include)
 add_executable(669RayTracing ${SRC_FILE})

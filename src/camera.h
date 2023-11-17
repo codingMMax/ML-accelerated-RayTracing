@@ -7,6 +7,9 @@
 
 #include "util.h"
 #include "hittable.h"
+#include "material.h"
+
+
 class camera {
 public:
     double aspect_ratio         = 1.0;

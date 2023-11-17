@@ -7,10 +7,16 @@
 
 #include "ray.h"
 #include "util.h"
+#include "interval.h"
+
+class material;
+
+
 class hit_record{
 public:
     point3 p;
     vec3 normal;
+    std::shared_ptr<material> mat;
     double t;
     bool front_face;
 
@@ -21,7 +27,7 @@ class hittable {
 public:
     virtual ~hittable() = default;
     hittable() = default;
-    virtual bool hit(const ray& r, interval ray_t, hit_record& rec) const = 0;
+    virtual bool hit(const ray& r, interval ray_t, hit_record& rec) const;
 };
 
 

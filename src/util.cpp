@@ -2,6 +2,8 @@
 // Created by MaxHu on 2023/11/12.
 //
 #include "util.h"
+#include "interval.h"
+
 
 using color = vec3;
 using point3 = vec3;
