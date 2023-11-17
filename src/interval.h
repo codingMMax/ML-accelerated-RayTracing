@@ -5,6 +5,9 @@
 #ifndef INTERVAL_H
 #define INTERVAL_H
 #include "util.h"
+#include <cstdlib>
+#include <cmath>
+
 
 class  interval {
 public:
