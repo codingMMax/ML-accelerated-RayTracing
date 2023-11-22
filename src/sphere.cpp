@@ -5,6 +5,7 @@
 #include "sphere.h"
 
 bool sphere::hit(const ray &r, interval ray_t, hit_record &rec) const {
+    point3 center = is_moving ? sphere_center(r.time()) : center1;
     vec3 oc = r.origin() - center;
     auto a = r.direction().length_squared();
     auto half_b = dot(oc, r.direction());
