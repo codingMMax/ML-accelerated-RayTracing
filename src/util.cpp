@@ -30,10 +30,3 @@ void write_color(std::ostream &out, color pixel_color, int samples_per_pixel){
         << static_cast<int>(256 * intensity.clamp(b)) << '\n';
 }
 
-double interval:: clamp(double x) const{
-    if(x < min) return min;
-    if(x > max) return max;
-    return x;
-}
-
-

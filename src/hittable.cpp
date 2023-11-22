@@ -10,6 +10,4 @@ void hit_record:: set_face_normal(const ray& r, const vec3 & outward_normal){
     normal = front_face ? outward_normal : -outward_normal;
 }
 
-bool hittable::hit(const ray &r, interval ray_t, hit_record &rec) const {
-    return false;
-}
+

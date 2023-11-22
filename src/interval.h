@@ -16,6 +16,8 @@ public:
 
     interval(double _min, double _max): min(_min), max(_max) {}
 
+    interval(const interval& a, const interval& b): min(fmin(a.min, b.min)), max(fmax(a.max, b.max)) {}
+
     bool contains(double x) const{
         return min <= x && x <= max;
     }
@@ -24,11 +26,13 @@ public:
         return min < x && x < max;
     }
 
-
+    double size() const;
 
     double clamp(double x) const;
 
     static const interval empty, universe;
+
+    interval expand(double delta) const;
 };
 
 const static interval empty (+infinity, -infinity);

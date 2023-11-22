@@ -3,6 +3,7 @@
 //
 
 #include "camera.h"
+#include <chrono>
 
 color camera::ray_color(const ray &r, int depth ,const hittable &world) const {
     hit_record rec;
@@ -84,9 +85,17 @@ void camera::render(const hittable &world) {
     initialize();
 
     std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
-
+    std::chrono::time_point<std::chrono::system_clock> start, end;
+    start = std::chrono::system_clock::now();
     for (int j = 0; j < image_height; ++j) {
         std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
+        if(j % 20 == 0 &&  j > 1 ){
+            end = std::chrono::system_clock::now();
+            std::chrono::duration<double> elapsed = end - start;
+            double elapsed_time = elapsed.count();
+            double lines_per_sec = j / elapsed_time;
+//            std::cout << samples_per_pixel << " sample/pixel speed @" << j << ": " << lines_per_sec << " lines/sec. \n";
+        }
         for (int i = 0; i < image_width; ++i) {
            color pixel_color(0,0,0);
            for(int sample = 0; sample < samples_per_pixel; sample++){
