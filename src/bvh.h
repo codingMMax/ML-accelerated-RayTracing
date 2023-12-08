@@ -21,6 +21,10 @@ private:
         return a->bounding_box().axis(axis_index).min < b->bounding_box().axis(axis_index).min;
     }
 
+    static bool box_vol_compare(const shared_ptr<hittable>a, const shared_ptr<hittable> b){
+        return a->bounding_box().vol < b->bounding_box().vol;
+    }
+
     static bool box_x_compare (const shared_ptr<hittable> a, const shared_ptr<hittable> b) {
         return box_compare(a, b, 0);
     }

@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.21)
 project(669RayTracing)
-
 set(CMAKE_CXX_STANDARD 14)
 set(SRC_FILE src/main.cpp
         src/camera.cpp
@@ -12,4 +11,5 @@ set(SRC_FILE src/main.cpp
         src/sphere.cpp
         src/interval.cpp src/material.cpp src/material.h src/aabb.cpp src/aabb.h src/bvh.cpp src/bvh.h)
 include_directories(/opt/homebrew/include)
+include_directories(/opt/homebrew/opt/libomp/include)
 add_executable(669RayTracing ${SRC_FILE})

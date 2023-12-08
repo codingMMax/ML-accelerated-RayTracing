@@ -20,7 +20,8 @@ bvh_node::bvh_node(const std::vector<shared_ptr<hittable>> &src_objects, size_t 
     auto comparator = (axis == 0) ? box_x_compare
                                   : (axis == 1) ? box_y_compare
                                                 : box_z_compare;
-
+    auto vol_comparator = box_vol_compare;
+    
     size_t object_span = end - start;
 
     if (object_span == 1) {
@@ -34,12 +35,16 @@ bvh_node::bvh_node(const std::vector<shared_ptr<hittable>> &src_objects, size_t 
             right = objects[start];
         }
     } else {
-        std::sort(objects.begin() + start, objects.begin() + end, comparator);
-
+        // std::sort(objects.begin() + start, objects.begin() + end, comparator);
+        // std::sort(objects.begin() + start, objects.begin() + end, vol_comparator);
         auto mid = start + object_span/2;
         left = make_shared<bvh_node>(objects, start, mid);
         right = make_shared<bvh_node>(objects, mid, end);
     }
+
+
+
+
 
     bbox = aabb(left->bounding_box(), right->bounding_box());
 }

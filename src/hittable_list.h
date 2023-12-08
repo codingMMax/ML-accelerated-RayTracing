@@ -22,7 +22,9 @@ public:
     void add(shared_ptr<hittable> object);
 
     hittable_list()= default;
-    hittable_list(shared_ptr<hittable> object) {add(object);}
+    hittable_list(shared_ptr<hittable> object) {
+        add(object);
+    }
     bool hit(const ray& r, interval ray_t, hit_record& rec) const override;
     aabb bounding_box() const override {return bbox;}
 };
