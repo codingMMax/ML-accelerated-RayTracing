@@ -14,9 +14,12 @@ bool bvh_node::hit(const ray &r, interval ray_t, hit_record &rec) const {
 }
 
 bvh_node::bvh_node(const std::vector<shared_ptr<hittable>> &src_objects, size_t start, size_t end) {
+
+
     auto objects = src_objects; // Create a modifiable array of the source scene objects
 
     int axis = random_int(0,2);
+    // std::cout << axis << std::endl;
     auto comparator = (axis == 0) ? box_x_compare
                                   : (axis == 1) ? box_y_compare
                                                 : box_z_compare;
@@ -36,14 +39,14 @@ bvh_node::bvh_node(const std::vector<shared_ptr<hittable>> &src_objects, size_t 
         }
     } else {
         // std::sort(objects.begin() + start, objects.begin() + end, comparator);
-        // std::sort(objects.begin() + start, objects.begin() + end, vol_comparator);
+        std::sort(objects.begin() + start, objects.begin() + end, vol_comparator);
+
         auto mid = start + object_span/2;
+    
+
         left = make_shared<bvh_node>(objects, start, mid);
         right = make_shared<bvh_node>(objects, mid, end);
     }
-
-
-
 
 
     bbox = aabb(left->bounding_box(), right->bounding_box());

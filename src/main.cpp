@@ -6,7 +6,7 @@
 #include "camera.h"
 #include "material.h"
 #include "bvh.h"
-
+#include <omp.h>
 int main() {
     hittable_list world;
 
@@ -14,13 +14,14 @@ int main() {
     world.add(make_shared<sphere>(point3(0, -1000, 0), 1000, ground_material));
 
 
-//    int factor = 30;
-    for(int factor = 10; factor <= 10; factor += 5) {
+   int limits = 20;
+    for(int factor = 20; factor <= limits; factor += 5) {
+            // #pragma omp parallel for
         for (int a = -factor; a < factor; a++) {
             for (int b = -factor; b < factor; b++) {
                 auto choose_mat = random_double();
                 point3 center(a + 0.9 * random_double(), 0.2, b + 0.9 * random_double());
-
+                // #pragma omp critical
                 if ((center - point3(4, 0.2, 0)).length() > 0.9) {
                     shared_ptr<material> sphere_material;
 
@@ -44,7 +45,6 @@ int main() {
                 }
             }
         }
-    }
         auto material1 = make_shared<dielectric>(1.5);
         world.add(make_shared<sphere>(point3(0, 1, 0), 1.0, material1));
 
@@ -59,6 +59,8 @@ int main() {
 
         size_t total_objects = world.objects.size();
         world = hittable_list(make_shared<bvh_node>(world));
+
+
         end = std::chrono::system_clock::now();
         auto duration = end - start;
         auto bvh_elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
@@ -82,8 +84,10 @@ int main() {
         end = std::chrono::system_clock::now();
         duration = end - start;
         auto render_elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
-        std::cout << "Building BVH:" << total_objects << " objects " << (double)bvh_elapsed_time / 1000 << " s " << "Rendering " << (double)render_elapsed_time / 1000 << " s";
+        std::cout << "Building BVH: " << total_objects << " objects " << (double)bvh_elapsed_time / 1000 << " s " << "Rendering " << (double)render_elapsed_time / 1000 << " s";
+        // std::cout << "Building BVH:" << total_objects << " objects " << (double)bvh_elapsed_time / 1000 << " s\n";
         std::cout << " BVH / Rendering: " << "%" << 100.00 * (double)bvh_elapsed_time / render_elapsed_time  << std::endl;
+    }
 
     return 0;
 

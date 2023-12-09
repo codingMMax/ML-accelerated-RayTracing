@@ -87,15 +87,17 @@ void camera::render(const hittable &world) {
     // std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
     std::chrono::time_point<std::chrono::system_clock> start, end;
     start = std::chrono::system_clock::now();
-    #pragma omp parallel_for
+    
+    // #pragma omp parallel_for
+
     for (int j = 0; j < image_height; ++j) {
-        // std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
+        std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
         if(j % 20 == 0 &&  j > 1 ){
             end = std::chrono::system_clock::now();
             std::chrono::duration<double> elapsed = end - start;
             double elapsed_time = std::chrono::duration_cast<std::chrono::milliseconds>(elapsed).count();
             double lines_per_sec = elapsed_time / j  ;
-            // std::cout << samples_per_pixel << " sample/pixel speed @" << j << ": " << lines_per_sec << " ms / line. \n";
+            std::cout << samples_per_pixel << " sample/pixel speed @" << j << ": " << lines_per_sec << " ms / line. \n";
         }
         for (int i = 0; i < image_width; ++i) {
            color pixel_color(0,0,0);

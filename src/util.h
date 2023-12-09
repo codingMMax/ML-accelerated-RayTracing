@@ -10,6 +10,7 @@
 #include <limits>
 #include <memory>
 #include <random>
+#include <chrono>
 
 inline double linear_to_gamma(double linear_component){
     return sqrt(linear_component);
